@@ -33,7 +33,6 @@ public class Radix{
 
     for (int i = 0; i < largestPlace; i++){
       while (data.size() > 0){
-        largestPlace = Math.max(largestPlace, length(data.get(0)));
         buckets[nth(data.get(0), i)].add(data.get(0));
         data.remove(0);
       }
