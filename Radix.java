@@ -9,7 +9,7 @@ public class Radix{
 
   public static int length(int n){
     if (n == 0){
-      return 0;
+      return 1;
     }
     else{
       return (int)Math.floor(Math.log10(Math.abs(n)))+1;
@@ -18,19 +18,13 @@ public class Radix{
 
   public static void merge(SortableLinkedList original, SortableLinkedList[]buckets){
     for (int i = 0; i < buckets.length; i++){
-      if (buckets[i] != null){
         original.extend(buckets[i]);
-      }
     }
   }
 
   public static void radixSortSimple(SortableLinkedList data){
-    int largestPlace = 0;
-    for (int i = 0; i < data.size(); i++){
-      if (length(data.get(i)) > largestPlace){
-        largestPlace = length(data.get(i));
-      }
-    }
+    int largestPlace = 1;
+    largestPlace = Math.max(largestPlace, length(data.get(0)));
 
     SortableLinkedList[] buckets = new SortableLinkedList[10];
     for (int i = 0; i < 10; i++){
@@ -39,6 +33,7 @@ public class Radix{
 
     for (int i = 0; i < largestPlace; i++){
       while (data.size() > 0){
+        largestPlace = Math.max(largestPlace, length(data.get(0)));
         buckets[nth(data.get(0), i)].add(data.get(0));
         data.remove(0);
       }
@@ -52,16 +47,13 @@ public class Radix{
     SortableLinkedList positive = new SortableLinkedList();
 
     for (int i = 0; i < data.size(); i++){
-      if (data.get(i) >= 0){
-        positive.add(data.get(i));
-        System.out.println(data.get(i));
-        data.remove(i);
-        i--;
-      }
-      else{
-        negative.add(0, data.get(i));
-        data.remove(i);
-        i--;
+      while (data.size() > 0){
+        if (data.get(0) > 0){
+          positive.add(data.remove(0));
+        }
+        else{
+          negative.add(data.remove(0));
+        }
       }
     }
 
@@ -69,10 +61,11 @@ public class Radix{
     radixSortSimple(negative);
 
     for(int i = negative.size()-1; i >= 0; i--){
-      negativeRev.add(negative.get(i));
+      negativeRev.add(negative.remove(0));
     }
 
     negativeRev.extend(positive);
     data.extend(negativeRev);
   }
+
 }
