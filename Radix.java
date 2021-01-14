@@ -24,21 +24,26 @@ public class Radix{
     }
   }
 
+  public static void radixSortSimple(SortableLinkedList data){
+    int largestPlace = 0;
+    for (int i = 0; i < data.size(); i++){
+      if (length(data.get(i)) > largestPlace){
+        largestPlace = length(data.get(i));
+      }
+    }
 
-  public static void main(String[] args){
+    SortableLinkedList[] buckets = new SortableLinkedList[10];
+    for (int i = 0; i < 10; i++){
+      buckets[i] = new SortableLinkedList();
+    }
 
+    for (int i = 0; i < largestPlace; i++){
+      while (data.size() > 0){
+        buckets[nth(data.get(0), i)].add(data.get(0));
+        data.remove(0);
+      }
+      merge(data, buckets);
+    }
   }
 
 }
-/*
-
-3
-This requires your MyLinkedList file to be present locally, but please do not commit this extra file.
-public static void merge(MyLinkedList original,MyLinkedList[]buckets)
-Merge all of the linked lists in the bucket array into your original linked list. The original may have elements, and those should be kept.
-This is O(buckets.length) which should be 10 when we use this later.
-The bucket[0] list will be merged first, then the bucket[1] etc.
-Write and thoroughly test these methods!
-
-
-*/
