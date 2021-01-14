@@ -16,7 +16,7 @@ public class Radix{
     }
   }
 
-  public static void merge(MyLinkedList original, MyLinkedList[]buckets){
+  public static void merge(SortableLinkedList original, SortableLinkedList[]buckets){
     for (int i = 0; i < buckets.length; i++){
       if (buckets[i] != null){
         original.extend(buckets[i]);
