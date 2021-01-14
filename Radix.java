@@ -5,7 +5,22 @@ public class Radix{
   public static int nth(int n, int col){
     int answer = (int)(n/(Math.pow(10, col)));
     return Math.abs(answer % 10);
+  }
+  public static int length(int n){
+    if (n == 0){
+      return 0;
     }
+    else{
+      return (int)Math.floor(Math.log10(Math.abs(n)))+1;
+    }
+  }
+
+  public static void main(String[] args){
+    System.out.println(length(0));
+    System.out.println(length(15));
+    System.out.println(length(-10));
+    System.out.println(length(-12512));
+
   }
 
 }
